@@ -3,7 +3,7 @@ import { useLocation } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
 import { checkStatus, type ApplicationStatus } from '../lib/supabase';
 
-const STATUS_MAP: Record<ApplicationStatus, { label: string; emoji: string; color: string; bg: string }> = {
+const STATUS_MAP: Record<<ApplicationStatus, { label: string; emoji: string; color: string; bg: string }> = {
   approved:  { label: 'WHITELISTED',   emoji: '✅', color: '#1a4a2a', bg: '#b8f5c8' },
   pending:   { label: 'UNDER REVIEW',  emoji: '⏳', color: '#4a3a0a', bg: '#fef3b0' },
   rejected:  { label: 'NOT SELECTED',  emoji: '❌', color: '#4a1a1a', bg: '#fbb0b0' },
@@ -12,7 +12,7 @@ const STATUS_MAP: Record<ApplicationStatus, { label: string; emoji: string; colo
 
 export default function CheckRole() {
   const [wallet, setWallet] = useState('');
-  const [status, setStatus] = useState<ApplicationStatus | null>(null);
+  const [status, setStatus] = useState<<ApplicationStatus | null>(null);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState('');
   const [, navigate] = useLocation();
@@ -35,30 +35,10 @@ export default function CheckRole() {
         alignItems: 'center',
         justifyContent: 'center',
         padding: '2rem 1.25rem',
+        paddingTop: '5rem',
         position: 'relative',
       }}
     >
-      {/* Back */}
-      <button
-        onClick={() => navigate('/home')}
-        style={{
-          position: 'absolute',
-          top: '1.5rem',
-          left: '1.5rem',
-          background: 'rgba(255,255,255,0.12)',
-          border: 'none',
-          borderRadius: '100px',
-          padding: '8px 18px',
-          fontFamily: "'Bangers', cursive",
-          fontSize: '0.95rem',
-          letterSpacing: '0.08em',
-          color: '#fff',
-          cursor: 'pointer',
-        }}
-      >
-        ← BACK
-      </button>
-
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
@@ -192,4 +172,3 @@ export default function CheckRole() {
     </div>
   );
 }
-    
