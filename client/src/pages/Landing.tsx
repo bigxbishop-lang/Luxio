@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { motion } from 'framer-motion';
 import { useUser } from '../App';
-import { BACKGROUND_IMAGES } from '../assets';
+import { BACKGROUND_IMAGES } from '../lib/assets';
 
 export default function Landing() {
   const [username, setUsername] = useState('');
