@@ -47,9 +47,9 @@ const TASKS: {
 ];
 
 export default function ApplyWL() {
-  const [done, setDone] = useState<<Set<TaskKey>>(new Set());
-  const [inputs, setInputs] = useState<<Partial<<Record<TaskKey, string>>>({});
-  const [errors, setErrors] = useState<<Partial<<Record<TaskKey | 'submit', string>>>({});
+  const [done, setDone] = useState<Set<TaskKey>>(new Set());
+  const [inputs, setInputs] = useState<Partial<<Record<TaskKey, string>>>({});
+  const [errors, setErrors] = useState<Partial<<Record<TaskKey | 'submit', string>>>({});
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const { xUsername } = useUser();
