@@ -1,44 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
-
-// All gallery images from attached_assets
-const ALL_IMAGES = [
-  '/attached_assets/1.jpg',
-  '/attached_assets/(3)1.jpg',
-  '/attached_assets/(4)1.jpg',
-  '/attached_assets/(5)1.jpg',
-  '/attached_assets/(6)1.jpg',
-  '/attached_assets/(7)1.jpg',
-  '/attached_assets/(8)1.jpg',
-  '/attached_assets/(9)1.jpg',
-  '/attached_assets/(20)1.jpg',
-  '/attached_assets/(21)1.jpg',
-  '/attached_assets/(22)1.jpg',
-  '/attached_assets/(23)1.jpg',
-  '/attached_assets/(24)1.jpg',
-  '/attached_assets/(25)1.jpg',
-  '/attached_assets/(26)1.jpg',
-  '/attached_assets/(27)1.jpg',
-  '/attached_assets/Image1.JPG',
-  '/attached_assets/image2.jpg',
-];
-
-function shuffle<T>(arr: T[]): T[] {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
+import { GALLERY_IMAGES } from '../assets';
 
 function GalleryCell({ index }: { index: number }) {
-  const [imgIndex, setImgIndex] = useState(() => (index * 3) % ALL_IMAGES.length);
+  const [imgIndex, setImgIndex] = useState(() => (index * 3) % GALLERY_IMAGES.length);
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    // Stagger each cell so they don't all swap at the same time
     const delay = index * 600;
     const interval = 3000 + index * 300;
 
@@ -46,7 +15,7 @@ function GalleryCell({ index }: { index: number }) {
       const id = setInterval(() => {
         setVisible(false);
         setTimeout(() => {
-          setImgIndex(i => (i + 1) % ALL_IMAGES.length);
+          setImgIndex(i => (i + 1) % GALLERY_IMAGES.length);
           setVisible(true);
         }, 350);
       }, interval);
@@ -71,7 +40,7 @@ function GalleryCell({ index }: { index: number }) {
         {visible && (
           <motion.img
             key={imgIndex}
-            src={ALL_IMAGES[imgIndex]}
+            src={GALLERY_IMAGES[imgIndex]}
             initial={{ opacity: 0, scale: 1.06 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.96 }}
@@ -83,14 +52,12 @@ function GalleryCell({ index }: { index: number }) {
               display: 'block',
             }}
             onError={e => {
-              // Show silhouette placeholder on error
               (e.currentTarget as HTMLImageElement).style.display = 'none';
             }}
           />
         )}
       </AnimatePresence>
 
-      {/* Silhouette fallback overlay */}
       <div
         style={{
           position: 'absolute',
@@ -102,7 +69,6 @@ function GalleryCell({ index }: { index: number }) {
           zIndex: -1,
         }}
       >
-        {/* Person silhouette like in the design */}
         <svg width="50%" height="50%" viewBox="0 0 100 120" fill="none">
           <ellipse cx="50" cy="30" rx="22" ry="25" fill="#2a2a2a" />
           <path d="M10 120 Q10 70 50 70 Q90 70 90 120Z" fill="#2a2a2a" />
@@ -135,7 +101,6 @@ export default function Gallery() {
         position: 'relative',
       }}
     >
-      {/* Back button */}
       <button
         onClick={() => navigate('/home')}
         style={{
@@ -156,7 +121,6 @@ export default function Gallery() {
         ← BACK
       </button>
 
-      {/* Title */}
       <motion.h1
         initial={{ opacity: 0, y: -12 }}
         animate={{ opacity: 1, y: 0 }}
@@ -172,7 +136,6 @@ export default function Gallery() {
         GALLERY
       </motion.h1>
 
-      {/* 3×3 grid in a rounded blue container like the design */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -201,4 +164,3 @@ export default function Gallery() {
     </div>
   );
 }
-          
