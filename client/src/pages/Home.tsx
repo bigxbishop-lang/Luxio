@@ -1,7 +1,7 @@
 import { useLocation } from 'wouter';
 import { motion } from 'framer-motion';
 import { useUser } from '../App';
-import { BACKGROUND_IMAGES } from '../assets';
+import { BACKGROUND_IMAGES } from '../lib/assets';
 
 const menuItems = [
   { label: 'GALLERY', path: '/gallery' },
