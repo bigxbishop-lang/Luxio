@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { motion } from 'framer-motion';
 import { useUser } from '../App';
+import { BACKGROUND_IMAGES } from '../assets';
 
 export default function Landing() {
   const [username, setUsername] = useState('');
@@ -34,9 +35,8 @@ export default function Landing() {
         overflow: 'hidden',
       }}
     >
-      {/* Background image fills screen */}
       <img
-        src="/attached_assets/Image1.JPG"
+        src={BACKGROUND_IMAGES.image1}
         alt=""
         style={{
           position: 'absolute',
@@ -48,7 +48,6 @@ export default function Landing() {
         }}
       />
 
-      {/* Input overlay — centered on screen, like the Figma design */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -60,10 +59,9 @@ export default function Landing() {
           flexDirection: 'column',
           alignItems: 'center',
           gap: '12px',
-          marginTop: '55vh', // push to bottom like in the design
+          marginTop: '55vh',
         }}
       >
-        {/* Username pill */}
         <div style={{ position: 'relative' }}>
           <input
             ref={inputRef}
@@ -106,7 +104,6 @@ export default function Landing() {
           )}
         </div>
 
-        {/* Proceed button */}
         <button
           onClick={proceed}
           style={{
