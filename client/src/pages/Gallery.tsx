@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GALLERY_IMAGES } from '../assets';
+import { GALLERY_IMAGES } from '../lib/assets';
 
 function GalleryCell({ index }: { index: number }) {
   const [imgIndex, setImgIndex] = useState(() => (index * 3) % GALLERY_IMAGES.length);
