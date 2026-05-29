@@ -12,7 +12,7 @@ const STATUS_MAP: Record<<ApplicationStatus, { label: string; emoji: string; col
 
 export default function CheckRole() {
   const [wallet, setWallet] = useState('');
-  const [status, setStatus] = useState<<ApplicationStatus | null>(null);
+  const [status, setStatus] = useState<ApplicationStatus | null>(null);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState('');
   const [, navigate] = useLocation();
