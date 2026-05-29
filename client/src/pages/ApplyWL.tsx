@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
 import { submitApplication } from '../lib/supabase';
@@ -47,13 +47,20 @@ const TASKS: {
 ];
 
 export default function ApplyWL() {
-  const [done, setDone] = useState<Set<TaskKey>>(new Set());
-  const [inputs, setInputs] = useState<Partial<Record<TaskKey, string>>>({});
-  const [errors, setErrors] = useState<Partial<Record<TaskKey | 'submit', string>>>({});
+  const [done, setDone] = useState<<Set<TaskKey>>(new Set());
+  const [inputs, setInputs] = useState<<Partial<<Record<TaskKey, string>>>({});
+  const [errors, setErrors] = useState<<Partial<<Record<TaskKey | 'submit', string>>>({});
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const { xUsername } = useUser();
   const [, navigate] = useLocation();
+
+  // Remember submission across refreshes
+  useEffect(() => {
+    if (xUsername && localStorage.getItem(`wl_submitted_${xUsername}`)) {
+      setSuccess(true);
+    }
+  }, [xUsername]);
 
   const openTask = (task: (typeof TASKS)[0]) => {
     if (task.url) window.open(task.url, '_blank');
@@ -67,7 +74,7 @@ export default function ApplyWL() {
   };
 
   const submit = async () => {
-    const errs: Partial<Record<TaskKey | 'submit', string>> = {};
+    const errs: Partial<<Record<TaskKey | 'submit', string>> = {};
     if (!inputs.wallet?.trim()) errs.wallet = 'Wallet address required';
     if (done.has('quote') && !inputs.quote?.trim()) errs.quote = 'Paste your quote link';
     if (done.has('tag') && !inputs.tag?.trim()) errs.tag = 'Paste your comment link';
@@ -84,6 +91,7 @@ export default function ApplyWL() {
         tag_link: inputs.tag?.trim(),
         tasks_done: [...done],
       });
+      localStorage.setItem(`wl_submitted_${xUsername}`, 'true');
       setSuccess(true);
     } catch {
       setErrors({ submit: 'Submission failed. Please try again.' });
@@ -102,30 +110,10 @@ export default function ApplyWL() {
         alignItems: 'center',
         justifyContent: 'center',
         padding: '2rem 1.25rem',
+        paddingTop: '5rem',
         position: 'relative',
       }}
     >
-      {/* Back */}
-      <button
-        onClick={() => navigate('/home')}
-        style={{
-          position: 'absolute',
-          top: '1.5rem',
-          left: '1.5rem',
-          background: 'rgba(255,255,255,0.12)',
-          border: 'none',
-          borderRadius: '100px',
-          padding: '8px 18px',
-          fontFamily: "'Bangers', cursive",
-          fontSize: '0.95rem',
-          letterSpacing: '0.08em',
-          color: '#fff',
-          cursor: 'pointer',
-        }}
-      >
-        ← BACK
-      </button>
-
       {/* Card */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}
@@ -183,7 +171,6 @@ export default function ApplyWL() {
                     {task.label}
                   </span>
 
-                  {/* For wallet/input tasks with no external link, show input inline */}
                   {task.isWallet ? (
                     <input
                       value={inputs.wallet || ''}
@@ -194,7 +181,7 @@ export default function ApplyWL() {
                       }}
                       placeholder="0x…"
                       style={{
-                        background: isDone ? '#1a1a1a' : '#1a1a1a',
+                        background: '#1a1a1a',
                         border: 'none',
                         borderRadius: '100px',
                         padding: '8px 16px',
@@ -213,7 +200,7 @@ export default function ApplyWL() {
                         if (!isDone) openTask(task);
                       }}
                       style={{
-                        background: isDone ? '#1a1a1a' : '#1a1a1a',
+                        background: '#1a1a1a',
                         border: 'none',
                         borderRadius: '100px',
                         padding: '8px 20px',
@@ -231,7 +218,6 @@ export default function ApplyWL() {
                   )}
                 </div>
 
-                {/* Input field for tasks needing a link */}
                 {task.needsInput && isDone && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
@@ -264,7 +250,6 @@ export default function ApplyWL() {
                   </motion.div>
                 )}
 
-                {/* For link tasks not yet marked done, show a "Mark done" helper after clicking */}
                 {task.needsInput && !isDone && task.url && (
                   <div style={{ paddingLeft: '8px', marginTop: '4px' }}>
                     <button
@@ -409,4 +394,3 @@ export default function ApplyWL() {
     </div>
   );
 }
-          
