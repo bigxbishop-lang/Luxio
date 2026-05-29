@@ -1,13 +1,13 @@
 import React from "react";
 import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
-// Ensure this import name matches what you use below
-import logoPng from "@assets/Logo.png";
 
 const navItems = [
+  { href: "/home", label: "HOME" },
+  { href: "/gallery", label: "GALLERY" },
   { href: "/apply", label: "APPLY WL" },
-  { href: "/customize", label: "DRESS UP" },
-  { href: "/race", label: "RACE" },
+  { href: "/check-role", label: "CHECK ROLE" },
+  { href: "/mint", label: "MINT" },
 ];
 
 export function Navbar() {
@@ -23,21 +23,17 @@ export function Navbar() {
         fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
       }}
     >
-      <Link href="/">
+      <Link href="/home">
         <motion.div
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="flex items-center gap-3 cursor-pointer"
         >
-          <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-orange-500/60">
-            {/* CHANGED logoSrc to logoPng to match the import above */}
-            <img src={logoPng} alt="Slogs" className="w-full h-full object-cover" />
-          </div>
           <span
             className="text-xl font-black tracking-widest text-orange-400"
             style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}
           >
-            SLOGS
+            OUTWORLD
           </span>
         </motion.div>
       </Link>
@@ -80,19 +76,6 @@ export function Navbar() {
           );
         })}
       </div>
-
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="px-4 py-2 rounded-lg text-sm font-bold tracking-wider transition-all hover:bg-orange-500/20"
-        style={{
-          border: "1px solid rgba(200,120,40,0.4)",
-          color: "#f97316",
-          fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-        }}
-      >
-        CONNECT
-      </motion.button>
     </nav>
   );
 }
