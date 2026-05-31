@@ -40,13 +40,12 @@ export default function Landing() {
         src={BACKGROUND_IMAGES.image1}
         alt=""
         style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100vw',
-          height: '100vh',
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
           objectFit: 'cover',
-          objectPosition: 'center top',
+          objectPosition: 'center',   // was 'center top' — caused the crop issue
           pointerEvents: 'none',
           userSelect: 'none',
         }}
